@@ -19,6 +19,6 @@ class EmailAddress
 
     private function validateAddress($emailAddressString)
     {
-        //throw if not valid
+        //if not valid, throw new \InvalidArgumentException();
     }
 }

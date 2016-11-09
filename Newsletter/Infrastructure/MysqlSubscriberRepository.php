@@ -1,5 +1,7 @@
 <?php
 
+namespace Newsletter\Infrastructure;
+
 use Newsletter\Domain\Subscriber;
 use Newsletter\Domain\SubscriberRepository;
 
@@ -29,5 +31,10 @@ class MysqlSubscriberRepository implements SubscriberRepository
         /*
         // UPSERT by key
         */
+    }
+
+    public function getAll()
+    {
+        // SELECT * FROM... return new Subscriber() array.
     }
 }

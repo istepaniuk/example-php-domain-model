@@ -1,5 +1,7 @@
 <?php
 
+namespace Newsletter\Infrastructure;
+
 use Newsletter\Domain\Clock;
 
 class SystemClock implements Clock
@@ -8,5 +10,4 @@ class SystemClock implements Clock
     {
         return new DateTime(null, new DateTimeZone("UTC"));
     }
-
 }

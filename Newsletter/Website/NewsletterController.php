@@ -9,9 +9,11 @@ class NewsletterController extends Controller
 
     public function __construct()
     {
-        $connectionString = "mysql://localhost/newsletter";
+        // This could be solved using a Factory or a DI Framework
+        $connectionString = "mysql://localhost/newsletter"; //from cfg.
         $repository = new MysqlSubscriberRepository($connectionString);
-        $this->newsletterService = new NewsletterService($repository);
+        $clock = new SystemClock();
+        $this->newsletterService = new NewsletterService($repository, $clock);
     }
 
     public function optOutAction($emailAddress)
