@@ -12,9 +12,9 @@ class MysqlSubscriberRepository implements SubscriberRepository
         $this->connectionString = $connectionString;
     }
 
-    public function get($emailAddress)
+    public function getByEmailAddress($emailAddress)
     {
-        throw new EmailAddressNotFoundException();
+        throw new SubscriberNotFoundException();
         /*
         $pkey = strval($emailAddress);
         //SELECT * FROM `subscriber` WHERE ... = $pkey;
@@ -24,7 +24,7 @@ class MysqlSubscriberRepository implements SubscriberRepository
         */
     }
 
-    public function save(Subscriber subscriber)
+    public function save(Subscriber $subscriber)
     {
         /*
         // UPSERT by key

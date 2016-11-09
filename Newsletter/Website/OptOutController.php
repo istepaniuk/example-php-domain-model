@@ -18,14 +18,14 @@ class NewsletterOptOutController extends Controller
     {
         try {
             $emailAddress = new EmailAddress($emailAddress);
-        } catch (\InvalidArgumentException){
+        } catch (\InvalidArgumentException $e){
             return $this->render('Error400.html.twig');
         }
 
         try {
             $this->optOutService->optOutSubscriber($emailAddress);
             return $this->render('Newsletter:opt_out_thanks.html.twig');
-        } catch (EmailAddressNotFoundException) {
+        } catch (SubscriberNotFoundException $e) {
             return $this->render('Newsletter:error.html.twig');
         }
     }
