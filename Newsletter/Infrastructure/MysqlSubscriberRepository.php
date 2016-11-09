@@ -5,6 +5,8 @@ use Newsletter\Domain\SubscriberRepository;
 
 class MysqlSubscriberRepository implements SubscriberRepository
 {
+    private $connectionString;
+
     public function __construct($connectionString)
     {
         $this->connectionString = $connectionString;
@@ -12,6 +14,7 @@ class MysqlSubscriberRepository implements SubscriberRepository
 
     public function get($emailAddress)
     {
+        throw new EmailAddressNotFoundException();
         /*
         $pkey = strval($emailAddress);
         //SELECT * FROM `subscriber` WHERE ... = $pkey;

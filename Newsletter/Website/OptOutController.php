@@ -1,7 +1,19 @@
 <?php
 
-public class NewsletterOptOutController extends Controller
+use Newsletter\Domain\EmailAddress;
+use Newsletter\Domain\NewsletterOptService;
+
+class NewsletterOptOutController extends Controller
 {
+    private $optOutService;
+
+    public function __construct()
+    {
+        $connectionString = "mysql://localhost/newsletter";
+        $repository = new MysqlSubscriberRepository($connectionString);
+        $this->optOutService = new NewsletterOptService($repository);
+    }
+
     public function optOutAction($emailAddress)
     {
         try {
