@@ -2,7 +2,7 @@
 
 namespace Newsletter\Domain;
 
-use Ramsey\Uuid\Uuid;
+use Rhumsaa\Uuid\Uuid;
 
 class SubscriberId
 {

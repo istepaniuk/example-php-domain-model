@@ -2,7 +2,7 @@
 
 namespace Newsletter\Domain;
 
-class SubscriberNotFoundException extends Exception
+class SubscriberNotFoundException extends \Exception
 {
 
 }

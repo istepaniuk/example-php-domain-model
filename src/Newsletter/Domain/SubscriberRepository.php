@@ -8,7 +8,7 @@ interface SubscriberRepository
      * @param EmailAddress $emailAddress
      * @return Subscriber
      */
-    public function getByEmailAddress($emailAddress);
+    public function getByEmailAddress(EmailAddress $emailAddress);
 
     /**
      * @param Subscriber $subscriber

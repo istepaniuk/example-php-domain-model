@@ -17,6 +17,11 @@ class EmailAddress
         return $this->address;
     }
 
+    public function equals(EmailAddress $other)
+    {
+        return $this->address == $other->address;
+    }
+
     private function validateAddress($emailAddressString)
     {
         //if not valid, throw new \InvalidArgumentException();

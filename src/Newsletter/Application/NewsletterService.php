@@ -1,6 +1,15 @@
 <?php
 
-namespace Newsletter\Domain;
+namespace Newsletter\Application;
+
+use Newsletter\Domain\Clock;
+use Newsletter\Domain\EmailAddress;
+use Newsletter\Domain\Newsletter;
+use Newsletter\Domain\NewsletterSender;
+use Newsletter\Domain\Subscriber;
+use Newsletter\Domain\SubscriberId;
+use Newsletter\Domain\SubscriberName;
+use Newsletter\Domain\SubscriberRepository;
 
 class NewsletterService
 {
@@ -37,7 +46,7 @@ class NewsletterService
     {
         $subscribers = $this->subscriberRepository->getAll();
         foreach ($subscribers as $subscriber) {
-            $this->sender->sendNewsletter($subscriber, $newsletter);
+            $this->sender->sendNewsletter($newsletter, $subscriber);
         }
     }
 }
