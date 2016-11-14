@@ -13,8 +13,8 @@ class InMemorySubscriberRepository implements SubscriberRepository
 
     public function getByEmailAddress(EmailAddress $emailAddress)
     {
-        foreach ($this->subscribers as $subscriber){
-            if ($subscriber->getEmail()->equals($emailAddress)){
+        foreach ($this->subscribers as $subscriber) {
+            if ($subscriber->getEmail()->equals($emailAddress)) {
                 return $subscriber;
             }
         }

@@ -20,7 +20,7 @@ class NewsletterController extends Controller
     {
         try {
             $emailAddress = new EmailAddress($emailAddress);
-        } catch (\InvalidArgumentException $e){
+        } catch (\InvalidArgumentException $e) {
             return $this->render('Error400.html.twig');
         }
 
@@ -37,7 +37,7 @@ class NewsletterController extends Controller
         try {
             $emailAddress = new EmailAddress($emailAddress);
             $name = new SubscriberName($firstName, $lastName);
-        } catch (\InvalidArgumentException $e){
+        } catch (\InvalidArgumentException $e) {
             return $this->render('Error400.html.twig');
         }
 

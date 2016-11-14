@@ -17,7 +17,7 @@ class EmailNewsletterSender implements NewsletterSender
             $newsletter->getSubject(),
             $newsletter->getMessage());
 
-        if (!$success){
+        if (!$success) {
             throw new Exception("Error sending email");
         }
     }
