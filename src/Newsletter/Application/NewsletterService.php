@@ -46,7 +46,9 @@ class NewsletterService
     {
         $subscribers = $this->subscriberRepository->getAll();
         foreach ($subscribers as $subscriber) {
-            $this->sender->sendNewsletter($newsletter, $subscriber);
+            if ($subscriber->isSubscribed()) {
+                $this->sender->sendNewsletter($newsletter, $subscriber);
+            }
         }
     }
 }
