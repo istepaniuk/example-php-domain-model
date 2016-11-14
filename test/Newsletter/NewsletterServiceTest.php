@@ -27,12 +27,14 @@ class NewsletterServiceTest extends TestCase
      */
     private $service;
     private $sentEmails = [];
+    private $fakeNow;
 
 
     public function setUp()
     {
+        $this->fakeNow = new \DateTime('2014-06-23T15:00:03+02:00');
         $clock = $this->createMock(Clock::class);
-        $clock->method('utcNow')->willReturn(new \DateTime());
+        $clock->method('utcNow')->willReturn($this->fakeNow);
         $this->sender = $this->createFakeSenderThatRecordsSentEmails();
         $this->repository = new InMemorySubscriberRepository();
 
@@ -84,6 +86,22 @@ class NewsletterServiceTest extends TestCase
         $this->service->sendNewsletterToAllSubscribers($newsletter);
 
         self::assertNotContains(strval($email), $this->sentEmails);
+    }
+
+
+    /**
+     * @test
+     */
+    public function recordsTheTimeOnWhichASubscriberLastOptedOut()
+    {
+        $email = new EmailAddress("jdoe@example.com");
+        $name = new SubscriberName("John", "Doe");
+        $this->service->signUp($email, $name);
+
+        $this->service->optOutSubscriber($email);
+        $stored = $this->repository->getByEmailAddress($email);
+        var_dump($stored);
+        self::assertEquals($stored->lastOptedOutAt(), $this->fakeNow);
     }
 
 

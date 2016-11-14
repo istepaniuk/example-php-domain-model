@@ -21,7 +21,6 @@ class Subscriber
         $this->optedOutAt = null;
     }
 
-
     public function getId()
     {
         return $this->id;
@@ -37,13 +36,20 @@ class Subscriber
         return $this->name;
     }
 
-    public function optOut(\DateTime $optedOutAt){
+    public function optOut(\DateTime $optedOutAt)
+    {
         $this->subscribed = false;
         $this->optedOutAt = $optedOutAt;
     }
 
-    public function isSubscribed(){
+    public function isSubscribed()
+    {
         return $this->subscribed;
+    }
+
+    public function lastOptedOutAt()
+    {
+        return $this->optedOutAt;
     }
 
     function __toString()

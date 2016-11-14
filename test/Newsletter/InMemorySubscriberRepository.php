@@ -13,22 +13,31 @@ class InMemorySubscriberRepository implements SubscriberRepository
 
     public function getByEmailAddress(EmailAddress $emailAddress)
     {
-        foreach ($this->subscribers as $subscriber) {
-            if ($subscriber->getEmail()->equals($emailAddress)) {
-                return $subscriber;
-            }
+        $key = strval($emailAddress);
+        if(!isset($this->subscribers[$key])) {
+            throw new SubscriberNotFoundException();
         }
-        throw new SubscriberNotFoundException();
+        $state = $this->subscribers[$key];
+
+        return $this->reconstructSubscriberFromState($state);
     }
 
     public function save(Subscriber $subscriber)
     {
-        $key = strval($subscriber->getId()->getValue());
-        $this->subscribers[$key] = $subscriber;
+        $key = strval($subscriber->getEmail());
+        $state = serialize($subscriber);
+        $this->subscribers[$key] = $state;
     }
 
     public function getAll()
     {
-        return array_values($this->subscribers);
+        return array_map(
+            __CLASS__ . '::reconstructSubscriberFromState',
+            $this->subscribers);
+    }
+
+    private static function reconstructSubscriberFromState($subscriberData)
+    {
+        return unserialize($subscriberData);
     }
 }
