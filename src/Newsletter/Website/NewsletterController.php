@@ -41,7 +41,7 @@ class NewsletterController extends Controller
             return $this->render('Error400.html.twig');
         }
 
-        $this->newsletterService->optOutSubscriber($name, $emailAddress);
+        $this->newsletterService->signUpSubscriber($name, $emailAddress);
         return $this->render('Newsletter:opt_out_thanks.html.twig');
     }
 }
