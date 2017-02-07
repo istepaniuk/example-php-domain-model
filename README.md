@@ -1,2 +1,2 @@
 # example-php-domain-model
-An example domain model implemented in PHP
+An example, incomplete domain model implemented in PHP to support discussions on the topic
