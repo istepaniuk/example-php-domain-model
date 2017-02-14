@@ -8,11 +8,10 @@ use Newsletter\Domain\EmailAddress;
 use Newsletter\Domain\Newsletter;
 use Newsletter\Domain\NewsletterSender;
 use Newsletter\Domain\Subscriber;
-use Newsletter\Domain\SubscriberId;
 use Newsletter\Domain\SubscriberName;
 use Newsletter\Domain\SubscriberRepository;
+use Newsletter\Infrastructure\InMemorySubscriberRepository;
 use PHPUnit\Framework\TestCase;
-
 
 class NewsletterServiceTest extends TestCase
 {
@@ -100,7 +99,6 @@ class NewsletterServiceTest extends TestCase
 
         $this->service->optOutSubscriber($email);
         $stored = $this->repository->getByEmailAddress($email);
-        var_dump($stored);
         self::assertEquals($stored->lastOptedOutAt(), $this->fakeNow);
     }
 

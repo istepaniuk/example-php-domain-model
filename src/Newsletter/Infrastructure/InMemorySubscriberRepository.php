@@ -1,6 +1,6 @@
 <?php
 
-namespace Test\Newsletter;
+namespace Newsletter\Infrastructure;
 
 use Newsletter\Domain\EmailAddress;
 use Newsletter\Domain\Subscriber;
