@@ -28,8 +28,7 @@ class NewsletterServiceTest extends TestCase
     private $sentEmails = [];
     private $fakeNow;
 
-
-    public function setUp()
+    protected function setUp()
     {
         $this->fakeNow = new \DateTime('2014-06-23T15:00:03+02:00');
         $clock = $this->createMock(Clock::class);
@@ -43,10 +42,7 @@ class NewsletterServiceTest extends TestCase
             $this->sender);
     }
 
-    /**
-     * @test
-     */
-    public function doesNotSendNewslettersIfThereAreNoSubscribers()
+    public function testDoesNotSendNewslettersIfThereAreNoSubscribers()
     {
         $newsletter = new Newsletter("A Test", "Testing...");
         self::assertEmpty($this->repository->getAll());
@@ -56,10 +52,7 @@ class NewsletterServiceTest extends TestCase
         self::assertEmpty($this->sentEmails);
     }
 
-    /**
-     * @test
-     */
-    public function sendsNewsletterToASubscriber()
+    public function testSendsNewsletterToASubscriber()
     {
         $email = new EmailAddress("jdoe@example.com");
         $name = new SubscriberName("John", "Doe");
@@ -71,10 +64,7 @@ class NewsletterServiceTest extends TestCase
         self::assertContains(strval($email), $this->sentEmails);
     }
 
-    /**
-     * @test
-     */
-    public function doesNotSendNewslettersToASubscriberThatOptedOut()
+    public function testDoesNotSendNewslettersToASubscriberThatOptedOut()
     {
         $email = new EmailAddress("jdoe@example.com");
         $name = new SubscriberName("John", "Doe");
@@ -87,11 +77,7 @@ class NewsletterServiceTest extends TestCase
         self::assertNotContains(strval($email), $this->sentEmails);
     }
 
-
-    /**
-     * @test
-     */
-    public function recordsTheTimeOnWhichASubscriberLastOptedOut()
+    public function testRecordsTheTimeOnWhichASubscriberLastOptedOut()
     {
         $email = new EmailAddress("jdoe@example.com");
         $name = new SubscriberName("John", "Doe");
