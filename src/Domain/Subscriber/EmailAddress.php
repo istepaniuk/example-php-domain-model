@@ -1,8 +1,8 @@
 <?php
 
-namespace Newsletter\Domain;
+namespace Newsletter\Domain\Subscriber;
 
-class EmailAddress
+final class EmailAddress
 {
     private $address;
 
@@ -17,7 +17,7 @@ class EmailAddress
         return $this->address;
     }
 
-    public function equals(EmailAddress $other)
+    public function equals(self $other)
     {
         return $this->address == $other->address;
     }

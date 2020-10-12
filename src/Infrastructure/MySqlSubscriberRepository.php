@@ -2,12 +2,12 @@
 
 namespace Newsletter\Infrastructure;
 
-use Newsletter\Domain\EmailAddress;
-use Newsletter\Domain\Subscriber;
-use Newsletter\Domain\SubscriberNotFoundException;
-use Newsletter\Domain\SubscriberRepository;
+use Newsletter\Domain\Subscriber\EmailAddress;
+use Newsletter\Domain\Subscriber\Subscriber;
+use Newsletter\Domain\Subscriber\SubscriberNotFoundException;
+use Newsletter\Domain\Subscriber\SubscriberRepository;
 
-class MysqlSubscriberRepository implements SubscriberRepository
+final class MySqlSubscriberRepository implements SubscriberRepository
 {
     private $connectionString;
 
@@ -16,7 +16,7 @@ class MysqlSubscriberRepository implements SubscriberRepository
         $this->connectionString = $connectionString;
     }
 
-    public function getByEmailAddress(EmailAddress $emailAddress)
+    public function getByEmailAddress(EmailAddress $emailAddress): Subscriber
     {
         throw new SubscriberNotFoundException();
         /*
@@ -28,12 +28,12 @@ class MysqlSubscriberRepository implements SubscriberRepository
         */
     }
 
-    public function save(Subscriber $subscriber)
+    public function save(Subscriber $subscriber): void
     {
         // UPSERT by key
     }
 
-    public function getAll()
+    public function getAll(): array
     {
         // SELECT * FROM subscribers;
         // return new Subscriber() array

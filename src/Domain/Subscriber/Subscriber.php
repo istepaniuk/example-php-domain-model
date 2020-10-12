@@ -1,8 +1,8 @@
 <?php
 
-namespace Newsletter\Domain;
+namespace Newsletter\Domain\Subscriber;
 
-class Subscriber
+final class Subscriber
 {
     private $id;
     private $email;
@@ -10,9 +10,11 @@ class Subscriber
     private $subscribed;
     private $optedOutAt;
 
-    public function __construct(SubscriberId $id,
-                                EmailAddress $email,
-                                SubscriberName $name)
+    public function __construct(
+        SubscriberId $id,
+        EmailAddress $email,
+        SubscriberName $name
+    )
     {
         $this->id = $id;
         $this->email = $email;
@@ -52,9 +54,8 @@ class Subscriber
         return $this->optedOutAt;
     }
 
-    function __toString()
+    public function __toString()
     {
-        return sprintf("%s <%s>", $this->name, $this->email);
+        return sprintf('%s <%s>', $this->name, $this->email);
     }
-
 }

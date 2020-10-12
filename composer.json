@@ -1,22 +1,37 @@
 {
-    "name": "istepaniuk/example-php-domain-model",
-    "type": "library",
-    "description": "Reference PHP Project",
+    "name": "istepaniuk/cal2bird",
+    "description": "iCalendar to MoneyBird timesheet connector",
+    "type": "project",
+    "license": "GPL-v3",
+    "authors": [
+        {
+            "name": "Ivan Stepaniuk",
+            "email": "me@istepaniuk.com"
+        }
+    ],
     "autoload": {
         "psr-4": {
-	    	"": "src/",
-	    	"Test\\": "test/"
+	    	"Newsletter\\": "src/"
 	    }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Newsletter\\Tests\\": "tests/"
+        }
+    },
     "require": {
-        "php": ">=7.0.0",
+        "php": ">=7.1",
         "doctrine/orm": "~2.2,>=2.2.3",
         "ramsey/uuid": "^2.9"
     },
     "require-dev": {
-        "phpunit/phpunit": "5.6.*"
+        "phpunit/phpunit": "^9.3",
+        "phpspec/prophecy-phpunit": "^2.0",
+        "friendsofphp/php-cs-fixer": "^2.16"
     },
-    "config": {
-        "bin-dir": "bin"
+    "scripts": {
+        "fix": "php-cs-fixer fix",
+        "test": "phpunit --colors=always tests/",
+        "testdox": "phpunit --testdox --colors=always tests/"
     }
 }

@@ -10,8 +10,7 @@ class Newsletter
     public function __construct($subject, $body)
     {
         if (!$subject || !$body) {
-            throw new \InvalidArgumentException(
-                "Both subject and body name are mandatory");
+            throw new \InvalidArgumentException('Both subject and body name are mandatory');
         }
         $this->subject = $subject;
         $this->body = $body;
@@ -26,5 +25,4 @@ class Newsletter
     {
         return $this->body;
     }
-
 }

@@ -3,15 +3,15 @@
 namespace Newsletter\Application;
 
 use Newsletter\Domain\Clock;
-use Newsletter\Domain\EmailAddress;
 use Newsletter\Domain\Newsletter;
 use Newsletter\Domain\NewsletterSender;
-use Newsletter\Domain\Subscriber;
-use Newsletter\Domain\SubscriberId;
-use Newsletter\Domain\SubscriberName;
-use Newsletter\Domain\SubscriberRepository;
+use Newsletter\Domain\Subscriber\EmailAddress;
+use Newsletter\Domain\Subscriber\Subscriber;
+use Newsletter\Domain\Subscriber\SubscriberId;
+use Newsletter\Domain\Subscriber\SubscriberName;
+use Newsletter\Domain\Subscriber\SubscriberRepository;
 
-class NewsletterService
+final class NewsletterService
 {
     private $subscriberRepository;
     private $clock;
@@ -20,7 +20,8 @@ class NewsletterService
     public function __construct(
         SubscriberRepository $subscriberRepository,
         Clock $clock,
-        NewsletterSender $sender)
+        NewsletterSender $sender
+    )
     {
         $this->subscriberRepository = $subscriberRepository;
         $this->clock = $clock;

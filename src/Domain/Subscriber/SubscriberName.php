@@ -1,8 +1,8 @@
 <?php
 
-namespace Newsletter\Domain;
+namespace Newsletter\Domain\Subscriber;
 
-class SubscriberName
+final class SubscriberName
 {
     private $firstName;
     private $lastName;
@@ -10,8 +10,7 @@ class SubscriberName
     public function __construct($firstName, $lastName)
     {
         if (!$firstName || !$lastName) {
-            throw new \InvalidArgumentException(
-                "Both first and last name are mandatory");
+            throw new \InvalidArgumentException('Both first and last name are mandatory');
         }
 
         $this->firstName = $firstName;
@@ -28,8 +27,8 @@ class SubscriberName
         return $this->lastName;
     }
 
-    function __toString()
+    public function __toString()
     {
-        return sprintf("%s %s", $this->firstName, $this->lastName);
+        return sprintf('%s %s', $this->firstName, $this->lastName);
     }
 }

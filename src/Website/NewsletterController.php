@@ -1,19 +1,27 @@
 <?php
 
-use Newsletter\Domain\EmailAddress;
-use Newsletter\Domain\NewsletterService;
+namespace Newsletter\Website;
 
-class NewsletterController extends Controller
+use Newsletter\Application\NewsletterService;
+use Newsletter\Domain\Subscriber\EmailAddress;
+use Newsletter\Domain\Subscriber\SubscriberName;
+use Newsletter\Domain\Subscriber\SubscriberNotFoundException;
+use Newsletter\Infrastructure\MysqlSubscriberRepository;
+use Newsletter\Infrastructure\SendgridNewsletterSender;
+use Newsletter\Infrastructure\SystemClock;
+
+final class NewsletterController
 {
     private $newsletterService;
 
     public function __construct()
     {
         // This could be solved using a Factory or a DI Framework
-        $connectionString = "mysql://localhost/newsletter"; //from cfg.
-        $repository = new MysqlSubscriberRepository($connectionString);
-        $clock = new SystemClock();
-        $this->newsletterService = new NewsletterService($repository, $clock);
+        $this->newsletterService = new NewsletterService(
+            new MySqlSubscriberRepository('mysql://localhost/newsletter'),
+            new SystemClock(),
+            new SendgridNewsletterSender()
+        );
     }
 
     public function optOutAction($emailAddress)
@@ -26,6 +34,7 @@ class NewsletterController extends Controller
 
         try {
             $this->newsletterService->optOutSubscriber($emailAddress);
+
             return $this->render('Newsletter:opt_out_thanks.html.twig');
         } catch (SubscriberNotFoundException $e) {
             return $this->render('Newsletter:error.html.twig');
@@ -41,7 +50,13 @@ class NewsletterController extends Controller
             return $this->render('Error400.html.twig');
         }
 
-        $this->newsletterService->signUpSubscriber($name, $emailAddress);
+        $this->newsletterService->signUp($emailAddress, $name);
+
         return $this->render('Newsletter:opt_out_thanks.html.twig');
+    }
+
+    private function render($template)
+    {
+        return 'something';
     }
 }

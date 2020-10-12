@@ -1,10 +1,10 @@
 <?php
 
-namespace Newsletter\Domain;
+namespace Newsletter\Domain\Subscriber;
 
 use Rhumsaa\Uuid\Uuid;
 
-class SubscriberId
+final class SubscriberId
 {
     private $value;
 
@@ -13,14 +13,15 @@ class SubscriberId
         $this->value = $value;
     }
 
-    public static function generate(){
+    public static function generate()
+    {
         $uuid = Uuid::uuid4();
-        return new SubscriberId($uuid);
+
+        return new self($uuid);
     }
 
     public function getValue()
     {
         return $this->value;
     }
-
 }
