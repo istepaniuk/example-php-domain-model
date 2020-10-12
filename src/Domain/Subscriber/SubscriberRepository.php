@@ -11,5 +11,5 @@ interface SubscriberRepository
     /**
      * @return Subscriber[]
      */
-    public function getAll(): array;
+    public function all(): array;
 }

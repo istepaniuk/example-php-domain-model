@@ -6,8 +6,5 @@ use Newsletter\Domain\Subscriber\Subscriber;
 
 interface NewsletterSender
 {
-    public function sendNewsletter(
-        Newsletter $newsletter,
-        Subscriber $subscriber
-    );
+    public function send(Newsletter $newsletter, Subscriber $subscriber): void;
 }

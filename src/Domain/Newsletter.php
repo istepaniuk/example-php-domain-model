@@ -2,12 +2,12 @@
 
 namespace Newsletter\Domain;
 
-class Newsletter
+final class Newsletter
 {
     private $subject;
     private $body;
 
-    public function __construct($subject, $body)
+    private function __construct(string $subject, string $body)
     {
         if (!$subject || !$body) {
             throw new \InvalidArgumentException('Both subject and body name are mandatory');
@@ -16,12 +16,17 @@ class Newsletter
         $this->body = $body;
     }
 
-    public function getSubject()
+    public static function fromStrings(string $subject, string $body): self
+    {
+        return new self($subject, $body);
+    }
+
+    public function subject(): string
     {
         return $this->subject;
     }
 
-    public function getBody()
+    public function body(): string
     {
         return $this->body;
     }

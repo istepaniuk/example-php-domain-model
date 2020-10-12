@@ -8,9 +8,14 @@ final class SubscriberId
 {
     private $value;
 
-    public function __construct($value)
+    protected function __construct($value)
     {
         $this->value = $value;
+    }
+
+    public static function fromString(string $value)
+    {
+        return new self($value);
     }
 
     public static function generate()
@@ -20,7 +25,7 @@ final class SubscriberId
         return new self($uuid);
     }
 
-    public function getValue()
+    public function __toString()
     {
         return $this->value;
     }

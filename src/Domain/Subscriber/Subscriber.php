@@ -2,6 +2,8 @@
 
 namespace Newsletter\Domain\Subscriber;
 
+use DateTimeInterface;
+
 final class Subscriber
 {
     private $id;
@@ -10,12 +12,11 @@ final class Subscriber
     private $subscribed;
     private $optedOutAt;
 
-    public function __construct(
+    private function __construct(
         SubscriberId $id,
         EmailAddress $email,
         SubscriberName $name
-    )
-    {
+    ) {
         $this->id = $id;
         $this->email = $email;
         $this->name = $name;
@@ -23,38 +24,46 @@ final class Subscriber
         $this->optedOutAt = null;
     }
 
-    public function getId()
+    public static function create(
+        SubscriberId $id,
+        EmailAddress $email,
+        SubscriberName $name
+    ) {
+        return new self($id, $email, $name);
+    }
+
+    public function id(): SubscriberId
     {
         return $this->id;
     }
 
-    public function getEmail()
+    public function email(): EmailAddress
     {
         return $this->email;
     }
 
-    public function getName()
+    public function name(): SubscriberName
     {
         return $this->name;
     }
 
-    public function optOut(\DateTime $optedOutAt)
+    public function optOut(\DateTime $optedOutAt): void
     {
         $this->subscribed = false;
         $this->optedOutAt = $optedOutAt;
     }
 
-    public function isSubscribed()
+    public function isSubscribed(): bool
     {
         return $this->subscribed;
     }
 
-    public function lastOptedOutAt()
+    public function lastOptedOutAt(): DateTimeInterface
     {
         return $this->optedOutAt;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return sprintf('%s <%s>', $this->name, $this->email);
     }

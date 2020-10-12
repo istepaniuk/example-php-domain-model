@@ -6,24 +6,29 @@ final class EmailAddress
 {
     private $address;
 
-    public function __construct($address)
+    private function __construct($address)
     {
         $this->validateAddress($address);
         $this->address = $address;
     }
 
-    public function __toString()
+    public static function fromString($address): self
     {
-        return $this->address;
+        return new self($address);
     }
 
-    public function equals(self $other)
+    public function equals(self $other): bool
     {
         return $this->address == $other->address;
     }
 
-    private function validateAddress($emailAddressString)
+    private function validateAddress($emailAddressString): void
     {
         //if not valid, throw new \InvalidArgumentException();
+    }
+
+    public function __toString(): string
+    {
+        return $this->address;
     }
 }

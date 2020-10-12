@@ -33,7 +33,7 @@ final class MySqlSubscriberRepository implements SubscriberRepository
         // UPSERT by key
     }
 
-    public function getAll(): array
+    public function all(): array
     {
         // SELECT * FROM subscribers;
         // return new Subscriber() array

@@ -27,7 +27,7 @@ final class NewsletterController
     public function optOutAction($emailAddress)
     {
         try {
-            $emailAddress = new EmailAddress($emailAddress);
+            $emailAddress = EmailAddress::fromString($emailAddress);
         } catch (\InvalidArgumentException $e) {
             return $this->render('Error400.html.twig');
         }
@@ -44,8 +44,8 @@ final class NewsletterController
     public function signUp($firstName, $lastName, $emailAddress)
     {
         try {
-            $emailAddress = new EmailAddress($emailAddress);
-            $name = new SubscriberName($firstName, $lastName);
+            $emailAddress = EmailAddress::fromString($emailAddress);
+            $name = SubscriberName::fromStrings($firstName, $lastName);
         } catch (\InvalidArgumentException $e) {
             return $this->render('Error400.html.twig');
         }

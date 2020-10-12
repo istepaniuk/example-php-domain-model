@@ -24,12 +24,12 @@ final class InMemorySubscriberRepository implements SubscriberRepository
 
     public function save(Subscriber $subscriber): void
     {
-        $key = (string) ($subscriber->getEmail());
+        $key = (string) ($subscriber->email());
         $state = serialize($subscriber);
         $this->subscribers[$key] = $state;
     }
 
-    public function getAll(): array
+    public function all(): array
     {
         return array_map(
             __CLASS__.'::reconstructSubscriberFromState',

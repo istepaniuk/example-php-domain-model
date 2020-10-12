@@ -35,8 +35,8 @@ class NewsletterServiceTest extends TestCase
 
     public function testDoesNotSendNewslettersIfThereAreNoSubscribers()
     {
-        $newsletter = new Newsletter('A Test', 'Testing...');
-        self::assertEmpty($this->repository->getAll());
+        $newsletter = Newsletter::fromStrings('A Test', 'Testing...');
+        self::assertEmpty($this->repository->all());
 
         $this->service->sendNewsletterToAllSubscribers($newsletter);
 
@@ -45,11 +45,11 @@ class NewsletterServiceTest extends TestCase
 
     public function testSendsNewsletterToASubscriber()
     {
-        $email = new EmailAddress('jdoe@example.com');
-        $name = new SubscriberName('John', 'Doe');
+        $email = EmailAddress::fromString('jdoe@example.com');
+        $name = SubscriberName::fromStrings('John', 'Doe');
         $this->service->signUp($email, $name);
 
-        $newsletter = new Newsletter('A Test', 'Testing...');
+        $newsletter = Newsletter::fromStrings('A Test', 'Testing...');
         $this->service->sendNewsletterToAllSubscribers($newsletter);
 
         self::assertContains((string) $email, $this->sentEmails);
@@ -57,12 +57,12 @@ class NewsletterServiceTest extends TestCase
 
     public function testDoesNotSendNewslettersToASubscriberThatOptedOut()
     {
-        $email = new EmailAddress('jdoe@example.com');
-        $name = new SubscriberName('John', 'Doe');
+        $email = EmailAddress::fromString('jdoe@example.com');
+        $name = SubscriberName::fromStrings('John', 'Doe');
         $this->service->signUp($email, $name);
 
         $this->service->optOutSubscriber($email);
-        $newsletter = new Newsletter('A Test', 'Testing...');
+        $newsletter = Newsletter::fromStrings('A Test', 'Testing...');
         $this->service->sendNewsletterToAllSubscribers($newsletter);
 
         self::assertNotContains((string) $email, $this->sentEmails);
@@ -70,8 +70,8 @@ class NewsletterServiceTest extends TestCase
 
     public function testRecordsTheTimeOnWhichASubscriberLastOptedOut()
     {
-        $email = new EmailAddress('jdoe@example.com');
-        $name = new SubscriberName('John', 'Doe');
+        $email = EmailAddress::fromString('jdoe@example.com');
+        $name = SubscriberName::fromStrings('John', 'Doe');
         $this->service->signUp($email, $name);
 
         $this->service->optOutSubscriber($email);
@@ -82,10 +82,10 @@ class NewsletterServiceTest extends TestCase
     private function createFakeSenderThatRecordsSentEmails()
     {
         $mock = $this->createMock(NewsletterSender::class);
-        $mock->method('sendNewsletter')
+        $mock->method('send')
             ->with($this->anything(), $this->callback(
                 function (Subscriber $to) {
-                    array_push($this->sentEmails, (string) ($to->getEmail()));
+                    array_push($this->sentEmails, (string) ($to->email()));
 
                     return true;
                 }

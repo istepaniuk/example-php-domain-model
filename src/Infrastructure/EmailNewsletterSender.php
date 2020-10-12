@@ -4,23 +4,22 @@ namespace Newsletter\Infrastructure;
 
 use Newsletter\Domain\Newsletter;
 use Newsletter\Domain\NewsletterSender;
-use Newsletter\Domain\Subscriber;
+use Newsletter\Domain\Subscriber\Subscriber;
 
-class EmailNewsletterSender implements NewsletterSender
+final class EmailNewsletterSender implements NewsletterSender
 {
-    public function sendNewsletter(
+    public function send(
         Newsletter $newsletter,
         Subscriber $subscriber
-    )
-    {
+    ): void {
         $success = mail(
-            $subscriber->getEmail(),
-            $newsletter->getSubject(),
-            $newsletter->getMessage()
+            $subscriber->email(),
+            $newsletter->subject(),
+            $newsletter->body()
         );
 
         if (!$success) {
-            throw new Exception('Error sending email');
+            throw new \Exception('Error sending email');
         }
     }
 }

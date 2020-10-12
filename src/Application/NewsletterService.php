@@ -21,8 +21,7 @@ final class NewsletterService
         SubscriberRepository $subscriberRepository,
         Clock $clock,
         NewsletterSender $sender
-    )
-    {
+    ) {
         $this->subscriberRepository = $subscriberRepository;
         $this->clock = $clock;
         $this->sender = $sender;
@@ -31,7 +30,7 @@ final class NewsletterService
     public function signUp(EmailAddress $emailAddress, SubscriberName $name)
     {
         $id = SubscriberId::generate();
-        $subscriber = new Subscriber($id, $emailAddress, $name);
+        $subscriber = Subscriber::create($id, $emailAddress, $name);
         $this->subscriberRepository->save($subscriber);
     }
 
@@ -45,10 +44,10 @@ final class NewsletterService
 
     public function sendNewsletterToAllSubscribers(Newsletter $newsletter)
     {
-        $subscribers = $this->subscriberRepository->getAll();
+        $subscribers = $this->subscriberRepository->all();
         foreach ($subscribers as $subscriber) {
             if ($subscriber->isSubscribed()) {
-                $this->sender->sendNewsletter($newsletter, $subscriber);
+                $this->sender->send($newsletter, $subscriber);
             }
         }
     }

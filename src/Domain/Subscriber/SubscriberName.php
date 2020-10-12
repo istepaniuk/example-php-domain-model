@@ -7,7 +7,7 @@ final class SubscriberName
     private $firstName;
     private $lastName;
 
-    public function __construct($firstName, $lastName)
+    private function __construct($firstName, $lastName)
     {
         if (!$firstName || !$lastName) {
             throw new \InvalidArgumentException('Both first and last name are mandatory');
@@ -17,18 +17,26 @@ final class SubscriberName
         $this->lastName = $lastName;
     }
 
-    public function getFirstName()
+    public static function fromStrings(string $firstName, string $lastName): self
+    {
+        return new self($firstName, $lastName);
+    }
+
+    public function getFirstName(): string
     {
         return $this->firstName;
     }
 
-    public function getLastName()
+    public function getLastName(): string
     {
         return $this->lastName;
     }
 
-    public function __toString()
+    public function toArray(): array
     {
-        return sprintf('%s %s', $this->firstName, $this->lastName);
+        return [
+            'firstName' => $this->firstName,
+            'lastName' => $this->lastName,
+        ];
     }
 }

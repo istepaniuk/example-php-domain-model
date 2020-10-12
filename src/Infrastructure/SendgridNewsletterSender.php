@@ -8,7 +8,7 @@ use Newsletter\Domain\Subscriber\Subscriber;
 
 final class SendgridNewsletterSender implements NewsletterSender
 {
-    public function sendNewsletter(Newsletter $newsletter, Subscriber $subscriber)
+    public function send(Newsletter $newsletter, Subscriber $subscriber): void
     {
         throw new \BadMethodCallException('Not implemented');
     }
