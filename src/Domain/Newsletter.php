@@ -11,9 +11,10 @@ final class Newsletter
 
     private function __construct(string $subject, string $body)
     {
-        if (!$subject || !$body) {
+        if (empty($subject) || empty($body)) {
             throw new \InvalidArgumentException('Both subject and body name are mandatory');
         }
+
         $this->subject = $subject;
         $this->body = $body;
     }

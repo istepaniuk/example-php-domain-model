@@ -11,9 +11,15 @@ final class SubscriberIdTest extends TestCase
 {
     public function test_it_can_be_created_from_a_string()
     {
-        $id = SubscriberId::fromString($stringId = 'some-string');
+        $id = SubscriberId::fromString('some-id');
 
         self::assertInstanceOf(SubscriberId::class, $id);
+    }
+
+    public function test_it_can_be_represented_as_A_string()
+    {
+        $id = SubscriberId::fromString($stringId = 'some-id');
+
         self::assertEquals($stringId, (string) $id);
     }
 
@@ -25,9 +31,9 @@ final class SubscriberIdTest extends TestCase
         self::assertTrue($id1->equals($id2));
     }
 
-    public function test_it_is_not_equal_when_compared_to_an_identical_id()
+    public function test_it_is_not_equal_when_compared_to_a_different_id()
     {
-        $id1 = SubscriberId::fromString('an-id');
+        $id1 = SubscriberId::fromString('some-id');
         $id2 = SubscriberId::fromString('a-different-id');
 
         self::assertFalse($id1->equals($id2));
@@ -38,11 +44,16 @@ final class SubscriberIdTest extends TestCase
         $id1 = SubscriberId::generate();
         $id2 = SubscriberId::generate();
         $id3 = SubscriberId::generate();
-        $id4 = SubscriberId::generate();
 
-        self::assertFalse($id1->equals($id4));
+        self::assertFalse($id1->equals($id2));
         self::assertFalse($id2->equals($id3));
-        self::assertFalse($id3->equals($id2));
-        self::assertFalse($id4->equals($id1));
+        self::assertFalse($id3->equals($id1));
+    }
+
+    public function test_it_cannot_be_created_with_an_empty_string()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+
+        SubscriberId::fromString('');
     }
 }

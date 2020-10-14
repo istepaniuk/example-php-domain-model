@@ -12,6 +12,10 @@ final class SubscriberId
 
     protected function __construct(string $id)
     {
+        if (empty($id)) {
+            throw new \InvalidArgumentException('Invalid SubscriberId');
+        }
+
         $this->id = $id;
     }
 

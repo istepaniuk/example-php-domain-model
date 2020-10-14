@@ -5,13 +5,21 @@ declare(strict_types=1);
 namespace Newsletter\Infrastructure;
 
 use DateTimeImmutable;
+use DateTimeInterface;
 use DateTimeZone;
 use Newsletter\Domain\Clock;
 
 final class SystemClock implements Clock
 {
-    public function utcNow()
+    private DateTimeZone $timezone;
+
+    public function __construct()
     {
-        return new DateTimeImmutable('now', new DateTimeZone('UTC'));
+        $this->timezone = new DateTimeZone('UTC');
+    }
+
+    public function utcNow(): DateTimeInterface
+    {
+        return new DateTimeImmutable('now', $this->timezone);
     }
 }

@@ -36,17 +36,17 @@ final class NewsletterService
         $this->subscriberRepository->save($subscriber);
     }
 
-    public function optOutSubscriber(EmailAddress $emailAddress): void
+    public function optOut(EmailAddress $emailAddress): void
     {
         $subscriber = $this->subscriberRepository->getByEmailAddress($emailAddress);
-        $now = $this->clock->utcNow();
-        $subscriber->optOut($now);
+        $subscriber->optOut($this->clock->utcNow());
         $this->subscriberRepository->save($subscriber);
     }
 
     public function sendNewsletterToAllSubscribers(Newsletter $newsletter): void
     {
         $subscribers = $this->subscriberRepository->all();
+
         foreach ($subscribers as $subscriber) {
             if ($subscriber->isSubscribed()) {
                 $this->sender->send($newsletter, $subscriber);

@@ -22,7 +22,8 @@
     "require": {
         "php": ">=7.1",
         "doctrine/orm": "~2.2,>=2.2.3",
-        "ramsey/uuid": "^2.9"
+        "ramsey/uuid": "^2.9",
+        "altorouter/altorouter": "^2.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.3",

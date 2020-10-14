@@ -59,13 +59,6 @@ final class Subscriber
         return $this->optedOutAt;
     }
 
-    public function equals(self $other): bool
-    {
-        return $this->id->equals($other->id)
-            && $this->email->equals($other->email)
-            && $this->name->equals($other->name);
-    }
-
     public function __toString(): string
     {
         return sprintf('%s <%s>', $this->name, $this->email);

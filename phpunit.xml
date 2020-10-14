@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+    bootstrap="./vendor/autoload.php"
+    timeoutForSmallTests="5"
+    timeoutForMediumTests="30"
+    timeoutForLargeTests="300"
+    verbose="true"
+>
+    <php>
+        <env name="DATABASE_DSN" value="mysql://test-mysql"/>
+   </php>
+    <groups>
+        <exclude>
+            <group>integration</group>
+        </exclude>
+    </groups>
+    <testsuites>
+        <testsuite name="Unit Tests">
+            <directory>./tests</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>

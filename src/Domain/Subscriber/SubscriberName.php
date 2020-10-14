@@ -9,9 +9,9 @@ final class SubscriberName
     private string $firstName;
     private string $lastName;
 
-    private function __construct($firstName, $lastName)
+    private function __construct(string $firstName, string $lastName)
     {
-        if (!$firstName || !$lastName) {
+        if (empty($firstName) || empty($lastName)) {
             throw new \InvalidArgumentException('Both first and last name are mandatory');
         }
 
@@ -24,27 +24,24 @@ final class SubscriberName
         return new self($firstName, $lastName);
     }
 
-    public function getFirstName(): string
+    public function firstName(): string
     {
         return $this->firstName;
     }
 
-    public function getLastName(): string
+    public function lastName(): string
     {
         return $this->lastName;
-    }
-
-    public function toArray(): array
-    {
-        return [
-            'firstName' => $this->firstName,
-            'lastName' => $this->lastName,
-        ];
     }
 
     public function equals(self $other): bool
     {
         return $this->firstName == $other->firstName
             && $this->lastName == $other->lastName;
+    }
+
+    public function __toString(): string
+    {
+        return "$this->firstName $this->lastName";
     }
 }

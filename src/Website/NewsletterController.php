@@ -6,25 +6,25 @@ use Newsletter\Application\NewsletterService;
 use Newsletter\Domain\Subscriber\EmailAddress;
 use Newsletter\Domain\Subscriber\SubscriberName;
 use Newsletter\Domain\Subscriber\SubscriberNotFoundException;
+use Newsletter\Infrastructure\EmailNewsletterSender;
 use Newsletter\Infrastructure\MysqlSubscriberRepository;
-use Newsletter\Infrastructure\SendgridNewsletterSender;
 use Newsletter\Infrastructure\SystemClock;
 
 final class NewsletterController
 {
-    private $newsletterService;
+    private NewsletterService $service;
 
     public function __construct()
     {
         // This could be solved using a Factory or a DI Framework
-        $this->newsletterService = new NewsletterService(
+        $this->service = new NewsletterService(
             new MySqlSubscriberRepository('mysql://localhost/newsletter'),
             new SystemClock(),
-            new SendgridNewsletterSender()
+            new EmailNewsletterSender()
         );
     }
 
-    public function optOutAction($emailAddress)
+    public function optOutAction($emailAddress): HttpResponse
     {
         try {
             $emailAddress = EmailAddress::fromString($emailAddress);
@@ -33,7 +33,7 @@ final class NewsletterController
         }
 
         try {
-            $this->newsletterService->optOutSubscriber($emailAddress);
+            $this->service->optOut($emailAddress);
 
             return $this->render('Newsletter:opt_out_thanks.html.twig');
         } catch (SubscriberNotFoundException $e) {
@@ -51,7 +51,7 @@ final class NewsletterController
             return $this->render('Error400.html.twig');
         }
 
-        $this->newsletterService->signUp($emailAddress, $name);
+        $this->service->signUp($emailAddress, $name);
 
         return $this->render('Newsletter:opt_out_thanks.html.twig');
     }

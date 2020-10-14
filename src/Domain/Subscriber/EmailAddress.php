@@ -8,13 +8,13 @@ final class EmailAddress
 {
     private string $address;
 
-    private function __construct($address)
+    private function __construct(string $address)
     {
         $this->validateAddress($address);
         $this->address = $address;
     }
 
-    public static function fromString($address): self
+    public static function fromString(string $address): self
     {
         return new self($address);
     }
@@ -24,9 +24,11 @@ final class EmailAddress
         return $this->address == $other->address;
     }
 
-    private function validateAddress($emailAddressString): void
+    private function validateAddress(string $address): void
     {
-        //if not valid, throw new \InvalidArgumentException();
+        if (!filter_var($address, FILTER_VALIDATE_EMAIL)) {
+            throw new \InvalidArgumentException('Invalid email address');
+        }
     }
 
     public function __toString(): string
