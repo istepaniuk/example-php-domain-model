@@ -1,4 +1,2 @@
-bin
-.idea
 vendor
 .php_cs.cache
