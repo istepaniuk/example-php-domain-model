@@ -20,25 +20,40 @@ final class MySqlSubscriberRepository implements SubscriberRepository
 
     public function getByEmailAddress(EmailAddress $emailAddress): Subscriber
     {
-        throw new SubscriberNotFoundException();
         /*
-        //SELECT * FROM subscriber WHERE email = $email;
 
-        if (empty...) ... throw EmailAddressNotFoundException();
+        SELECT * FROM `subscriber` WHERE `email` = $email;
+
+        if (empty...) {
+          throw EmailAddressNotFoundException();
+        }
 
         return new Subscriber(..., ...);
+
         */
+
+        throw new SubscriberNotFoundException();
     }
 
     public function save(Subscriber $subscriber): void
     {
-        // UPSERT
+        /*
+
+        INSERT INTO `subscriber` ...
+        ON CONFLICT UPDATE ... ;
+
+        */
     }
 
     public function all(): array
     {
-        // SELECT * FROM subscribers;
-        // foreach result -> return new Subscriber()
+        /*
+
+        SELECT * FROM `subscriber`;
+
+        foreach result -> new Subscriber()
+
+        */
 
         return [];
     }

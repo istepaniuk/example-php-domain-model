@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Newsletter\Website;
 
@@ -16,7 +17,8 @@ final class NewsletterController
 
     public function __construct()
     {
-        // This could be solved using a Factory or a DI Framework
+        // This could be injected using a Factory or a DI Framework, etc.
+
         $this->service = new NewsletterService(
             new MySqlSubscriberRepository('mysql://localhost/newsletter'),
             new SystemClock(),
@@ -24,40 +26,40 @@ final class NewsletterController
         );
     }
 
-    public function optOutAction($emailAddress): HttpResponse
+    public function optOutAction($emailAddress): string
     {
         try {
             $emailAddress = EmailAddress::fromString($emailAddress);
         } catch (\InvalidArgumentException $e) {
-            return $this->render('Error400.html.twig');
+            return $this->render(400, 'Error400.html.twig');
         }
 
         try {
             $this->service->optOut($emailAddress);
 
-            return $this->render('Newsletter:opt_out_thanks.html.twig');
+            return $this->render(200, 'Newsletter:opt_out_thanks.html.twig');
         } catch (SubscriberNotFoundException $e) {
-            return $this->render('Newsletter:error.html.twig');
+            return $this->render(404, 'Newsletter:error.html.twig');
         }
     }
 
     public function signUp($firstName, $lastName, $emailAddress)
     {
         try {
-            /** @var TYPE_NAME $emailAddress */
             $emailAddress = EmailAddress::fromString($emailAddress);
             $name = SubscriberName::fromStrings($firstName, $lastName);
         } catch (\InvalidArgumentException $e) {
-            return $this->render('Error400.html.twig');
+            return $this->render(400, 'Error400.html.twig');
         }
 
         $this->service->signUp($emailAddress, $name);
 
-        return $this->render('Newsletter:opt_out_thanks.html.twig');
+        return $this->render(200, 'Newsletter:opt_out_thanks.html.twig');
     }
 
-    private function render($template)
+    private function render(int $errorCode, string $template): string
     {
+        // renders a fancy template
         return 'something';
     }
 }
