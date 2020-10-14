@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Newsletter\Domain;
 
 final class Newsletter
 {
-    private $subject;
-    private $body;
+    private string $subject;
+    private string $body;
 
     private function __construct(string $subject, string $body)
     {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Newsletter\Infrastructure;
 
 use Newsletter\Domain\Subscriber\EmailAddress;
@@ -9,7 +11,7 @@ use Newsletter\Domain\Subscriber\SubscriberRepository;
 
 final class InMemorySubscriberRepository implements SubscriberRepository
 {
-    private $subscribers = [];
+    private array $subscribers = [];
 
     public function getByEmailAddress(EmailAddress $emailAddress): Subscriber
     {
@@ -17,28 +19,19 @@ final class InMemorySubscriberRepository implements SubscriberRepository
         if (!isset($this->subscribers[$key])) {
             throw new SubscriberNotFoundException();
         }
-        $state = $this->subscribers[$key];
 
-        return $this->reconstructSubscriberFromState($state);
+        return $this->subscribers[$key];
     }
 
     public function save(Subscriber $subscriber): void
     {
-        $key = (string) ($subscriber->email());
-        $state = serialize($subscriber);
+        $key = (string) $subscriber->email();
+        $state = unserialize(serialize($subscriber));
         $this->subscribers[$key] = $state;
     }
 
     public function all(): array
     {
-        return array_map(
-            __CLASS__.'::reconstructSubscriberFromState',
-            $this->subscribers
-        );
-    }
-
-    private static function reconstructSubscriberFromState($subscriberData)
-    {
-        return unserialize($subscriberData);
+        return $this->subscribers;
     }
 }

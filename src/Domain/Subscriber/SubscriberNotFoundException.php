@@ -1,7 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Newsletter\Domain\Subscriber;
 
-final class SubscriberNotFoundException extends \Exception
+use Exception;
+
+final class SubscriberNotFoundException extends Exception
 {
 }

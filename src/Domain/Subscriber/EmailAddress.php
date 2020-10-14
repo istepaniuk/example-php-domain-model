@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Newsletter\Domain\Subscriber;
 
 final class EmailAddress
 {
-    private $address;
+    private string $address;
 
     private function __construct($address)
     {

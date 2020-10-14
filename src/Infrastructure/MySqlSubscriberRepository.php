@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Newsletter\Infrastructure;
 
 use Newsletter\Domain\Subscriber\EmailAddress;
@@ -9,7 +11,7 @@ use Newsletter\Domain\Subscriber\SubscriberRepository;
 
 final class MySqlSubscriberRepository implements SubscriberRepository
 {
-    private $connectionString;
+    private string $connectionString;
 
     public function __construct($connectionString)
     {
@@ -20,8 +22,8 @@ final class MySqlSubscriberRepository implements SubscriberRepository
     {
         throw new SubscriberNotFoundException();
         /*
-        $id = strval($emailAddress);
-        //SELECT * FROM subscriber WHERE id = $id;
+        //SELECT * FROM subscriber WHERE email = $email;
+
         if (empty...) ... throw EmailAddressNotFoundException();
 
         return new Subscriber(..., ...);
@@ -30,12 +32,14 @@ final class MySqlSubscriberRepository implements SubscriberRepository
 
     public function save(Subscriber $subscriber): void
     {
-        // UPSERT by key
+        // UPSERT
     }
 
     public function all(): array
     {
         // SELECT * FROM subscribers;
-        // return new Subscriber() array
+        // foreach result -> return new Subscriber()
+
+        return [];
     }
 }

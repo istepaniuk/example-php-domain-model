@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Newsletter\Domain;
 
 use Newsletter\Domain\Subscriber\Subscriber;

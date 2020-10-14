@@ -1,32 +1,39 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Newsletter\Domain\Subscriber;
 
 use Rhumsaa\Uuid\Uuid;
 
 final class SubscriberId
 {
-    private $value;
+    private string $id;
 
-    protected function __construct($value)
+    protected function __construct(string $id)
     {
-        $this->value = $value;
+        $this->id = $id;
     }
 
-    public static function fromString(string $value)
+    public static function fromString(string $id): self
     {
-        return new self($value);
+        return new self($id);
     }
 
-    public static function generate()
+    public static function generate(): self
     {
         $uuid = Uuid::uuid4();
 
-        return new self($uuid);
+        return new self((string) $uuid);
     }
 
-    public function __toString()
+    public function equals(self $other): bool
     {
-        return $this->value;
+        return $this->id == $other->id;
+    }
+
+    public function __toString(): string
+    {
+        return $this->id;
     }
 }

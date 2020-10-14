@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Newsletter\Domain\Subscriber;
 
 final class SubscriberName
 {
-    private $firstName;
-    private $lastName;
+    private string $firstName;
+    private string $lastName;
 
     private function __construct($firstName, $lastName)
     {
@@ -38,5 +40,11 @@ final class SubscriberName
             'firstName' => $this->firstName,
             'lastName' => $this->lastName,
         ];
+    }
+
+    public function equals(self $other): bool
+    {
+        return $this->firstName == $other->firstName
+            && $this->lastName == $other->lastName;
     }
 }

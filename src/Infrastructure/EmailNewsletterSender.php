@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Newsletter\Infrastructure;
 
 use Newsletter\Domain\Newsletter;
@@ -8,14 +10,12 @@ use Newsletter\Domain\Subscriber\Subscriber;
 
 final class EmailNewsletterSender implements NewsletterSender
 {
-    public function send(
-        Newsletter $newsletter,
-        Subscriber $subscriber
-    ): void {
+    public function send(Newsletter $newsletter, Subscriber $subscriber): void
+    {
         $success = mail(
-            $subscriber->email(),
-            $newsletter->subject(),
-            $newsletter->body()
+            (string) $subscriber->email(),
+            (string) $newsletter->subject(),
+            (string) $newsletter->body()
         );
 
         if (!$success) {

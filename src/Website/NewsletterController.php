@@ -44,6 +44,7 @@ final class NewsletterController
     public function signUp($firstName, $lastName, $emailAddress)
     {
         try {
+            /** @var TYPE_NAME $emailAddress */
             $emailAddress = EmailAddress::fromString($emailAddress);
             $name = SubscriberName::fromStrings($firstName, $lastName);
         } catch (\InvalidArgumentException $e) {

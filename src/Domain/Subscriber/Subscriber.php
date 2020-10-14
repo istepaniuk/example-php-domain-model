@@ -1,34 +1,30 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Newsletter\Domain\Subscriber;
 
 use DateTimeInterface;
 
 final class Subscriber
 {
-    private $id;
-    private $email;
-    private $name;
-    private $subscribed;
-    private $optedOutAt;
+    private SubscriberId $id;
+    private EmailAddress $email;
+    private SubscriberName $name;
+    private bool $isSubscribed;
+    private ?DateTimeInterface $optedOutAt;
 
-    private function __construct(
-        SubscriberId $id,
-        EmailAddress $email,
-        SubscriberName $name
-    ) {
+    private function __construct(SubscriberId $id, EmailAddress $email, SubscriberName $name)
+    {
         $this->id = $id;
         $this->email = $email;
         $this->name = $name;
-        $this->subscribed = true;
+        $this->isSubscribed = true;
         $this->optedOutAt = null;
     }
 
-    public static function create(
-        SubscriberId $id,
-        EmailAddress $email,
-        SubscriberName $name
-    ) {
+    public static function create(SubscriberId $id, EmailAddress $email, SubscriberName $name): self
+    {
         return new self($id, $email, $name);
     }
 
@@ -47,20 +43,27 @@ final class Subscriber
         return $this->name;
     }
 
-    public function optOut(\DateTime $optedOutAt): void
+    public function optOut(DateTimeInterface $optedOutAt): void
     {
-        $this->subscribed = false;
+        $this->isSubscribed = false;
         $this->optedOutAt = $optedOutAt;
     }
 
     public function isSubscribed(): bool
     {
-        return $this->subscribed;
+        return $this->isSubscribed;
     }
 
     public function lastOptedOutAt(): DateTimeInterface
     {
         return $this->optedOutAt;
+    }
+
+    public function equals(self $other): bool
+    {
+        return $this->id->equals($other->id)
+            && $this->email->equals($other->email)
+            && $this->name->equals($other->name);
     }
 
     public function __toString(): string
