@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Newsletter\Tests\Application;
 
 use Newsletter\Application\NewsletterService;
+use Newsletter\Domain\Subscriber\EmailAddress;
+use Newsletter\Domain\Subscriber\SubscriberEmailAddressAlreadyInUse;
 use Newsletter\Domain\Subscriber\SubscriberRepository;
 use Newsletter\Infrastructure\InMemorySubscriberRepository;
 use Newsletter\Tests\Fixtures;
@@ -37,9 +39,7 @@ final class NewsletterServiceTest extends TestCase
 
     public function test_it_sends_a_newsletter_to_a_subscriber()
     {
-        $email = Fixtures::aGivenEmailAddress();
-        $name = Fixtures::aGivenSubscriberName();
-        $this->service->signUp($email, $name);
+        $this->givenASubscriberThatSignedUp($email = Fixtures::aGivenEmailAddress());
 
         $newsletter = Fixtures::aGivenNewsletter();
         $this->service->sendNewsletterToAllSubscribers($newsletter);
@@ -49,9 +49,7 @@ final class NewsletterServiceTest extends TestCase
 
     public function test_it_does_not_send_newsletters_to_a_subscriber_that_opted_out()
     {
-        $email = Fixtures::aGivenEmailAddress();
-        $name = Fixtures::aGivenSubscriberName();
-        $this->service->signUp($email, $name);
+        $this->givenASubscriberThatSignedUp($email = Fixtures::aGivenEmailAddress());
         $this->service->optOut($email);
 
         $this->service->sendNewsletterToAllSubscribers(Fixtures::aGivenNewsletter());
@@ -61,13 +59,36 @@ final class NewsletterServiceTest extends TestCase
 
     public function test_it_records_the_time_on_which_a_subscriber_opted_out()
     {
-        $email = Fixtures::aGivenEmailAddress();
-        $name = Fixtures::aGivenSubscriberName();
-        $this->service->signUp($email, $name);
+        $this->givenASubscriberThatSignedUp($email = Fixtures::aGivenEmailAddress());
 
         $this->service->optOut($email);
 
         $subscriber = $this->repository->getByEmailAddress($email);
         self::assertEquals($subscriber->lastOptedOutAt(), $this->clock->utcNow());
+    }
+
+    public function test_it_provides_a_list_of_subscribers()
+    {
+        $this->givenASubscriberThatSignedUp(Fixtures::aGivenEmailAddress());
+        $this->givenASubscriberThatSignedUp(Fixtures::someOtherEmailAddress());
+
+        $subscribers = $this->service->subscribers();
+
+        self::assertCount(2, $subscribers);
+    }
+
+    public function test_it_does_not_allow_to_signup_with_an_email_address_already_in_use()
+    {
+        $this->givenASubscriberThatSignedUp(Fixtures::aGivenEmailAddress());
+
+        $this->expectException(SubscriberEmailAddressAlreadyInUse::class);
+
+        $this->givenASubscriberThatSignedUp(Fixtures::aGivenEmailAddress());
+    }
+
+    private function givenASubscriberThatSignedUp(EmailAddress $withEmail): void
+    {
+        $name = Fixtures::aGivenSubscriberName();
+        $this->service->signUp($withEmail, $name);
     }
 }

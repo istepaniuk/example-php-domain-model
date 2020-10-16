@@ -6,9 +6,17 @@ namespace Newsletter\Domain\Subscriber;
 
 interface SubscriberRepository
 {
-    public function getByEmailAddress(EmailAddress $emailAddress): Subscriber;
-
     public function save(Subscriber $subscriber): void;
+
+    /**
+     * @throws SubscriberNotFoundException
+     */
+    public function get(SubscriberId $id): Subscriber;
+
+    /**
+     * @throws SubscriberNotFoundException
+     */
+    public function getByEmailAddress(EmailAddress $emailAddress): Subscriber;
 
     /**
      * @return Subscriber[]

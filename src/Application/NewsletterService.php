@@ -53,4 +53,9 @@ final class NewsletterService
             }
         }
     }
+
+    public function subscribers(): array
+    {
+        return $this->subscriberRepository->all();
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Newsletter\Website;
@@ -57,7 +58,14 @@ final class NewsletterController
         return $this->render(200, 'Newsletter:opt_out_thanks.html.twig');
     }
 
-    private function render(int $errorCode, string $template): string
+    public function listAllSubscribers()
+    {
+        $subscribers = $this->service->subscribers();
+
+        return $this->render(200, 'Newsletter:subscriber_list.html.twig', $subscribers);
+    }
+
+    private function render(int $errorCode, string $template, $context = []): string
     {
         // renders a fancy template
         return 'something';

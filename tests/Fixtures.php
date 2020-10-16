@@ -26,6 +26,11 @@ final class Fixtures
         return EmailAddress::fromString('john.doe@example.com');
     }
 
+    public static function someOtherEmailAddress(): EmailAddress
+    {
+        return EmailAddress::fromString('jane.doe@example.com');
+    }
+
     public static function aGivenSubscriberName(): SubscriberName
     {
         return SubscriberName::fromStrings('John', 'Doe');
