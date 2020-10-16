@@ -32,7 +32,7 @@ final class NewsletterServiceTest extends TestCase
     {
         self::assertEmpty($this->repository->all());
 
-        $this->service->sendNewsletterToAllSubscribers(Fixtures::aGivenNewsletter());
+        $this->service->sendOutNewsletter(Fixtures::aGivenNewsletter());
 
         self::assertEmpty($this->sender->sentEmails);
     }
@@ -42,7 +42,7 @@ final class NewsletterServiceTest extends TestCase
         $this->givenASubscriberThatSignedUp($email = Fixtures::aGivenEmailAddress());
 
         $newsletter = Fixtures::aGivenNewsletter();
-        $this->service->sendNewsletterToAllSubscribers($newsletter);
+        $this->service->sendOutNewsletter($newsletter);
 
         self::assertContains((string) $email, $this->sender->sentEmails);
     }
@@ -52,7 +52,7 @@ final class NewsletterServiceTest extends TestCase
         $this->givenASubscriberThatSignedUp($email = Fixtures::aGivenEmailAddress());
         $this->service->optOut($email);
 
-        $this->service->sendNewsletterToAllSubscribers(Fixtures::aGivenNewsletter());
+        $this->service->sendOutNewsletter(Fixtures::aGivenNewsletter());
 
         self::assertEmpty($this->sender->sentEmails);
     }

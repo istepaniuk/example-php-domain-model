@@ -43,7 +43,7 @@ final class NewsletterService
         $this->subscriberRepository->save($subscriber);
     }
 
-    public function sendNewsletterToAllSubscribers(Newsletter $newsletter): void
+    public function sendOutNewsletter(Newsletter $newsletter): void
     {
         $subscribers = $this->subscriberRepository->all();
 
