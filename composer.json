@@ -1,11 +1,11 @@
 {
-    "name": "istepaniuk/cal2bird",
-    "description": "iCalendar to MoneyBird timesheet connector",
+    "name": "istepaniuk/example-php-domain-model",
+    "description": "Example PHP domain model",
     "type": "project",
     "license": "GPL-v3",
     "authors": [
         {
-            "name": "Ivan Stepaniuk",
+            "name": "Iván Stepaniuk",
             "email": "me@istepaniuk.com"
         }
     ],
@@ -20,10 +20,9 @@
         }
     },
     "require": {
-        "php": ">=7.1",
+        "php": ">=7.4",
         "doctrine/orm": "~2.2,>=2.2.3",
-        "ramsey/uuid": "^2.9",
-        "altorouter/altorouter": "^2.0"
+        "ramsey/uuid": "^2.9"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.3",
