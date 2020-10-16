@@ -31,7 +31,7 @@
     },
     "scripts": {
         "fix": "php-cs-fixer fix",
-        "test": "phpunit --colors=always tests/",
-        "testdox": "phpunit --testdox --colors=always tests/"
+        "test": "phpunit --colors=always",
+        "testdox": "phpunit --testdox --colors=always"
     }
 }

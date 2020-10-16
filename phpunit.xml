@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit
-    bootstrap="./vendor/autoload.php"
-    timeoutForSmallTests="5"
-    timeoutForMediumTests="30"
-    timeoutForLargeTests="300"
-    verbose="true"
->
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
+    <coverage>
+        <include>
+            <directory suffix=".php">src</directory>
+        </include>
+    </coverage>
     <php>
         <env name="DATABASE_DSN" value="mysql://test-mysql"/>
-   </php>
+    </php>
     <groups>
         <exclude>
             <group>integration</group>
@@ -19,15 +19,4 @@
             <directory>./tests</directory>
         </testsuite>
     </testsuites>
-
-    <filter>
-        <whitelist>
-            <directory suffix=".php">src</directory>
-        </whitelist>
-        <logging>
-            <log type="coverage-html" target="./log/report" charset="UTF-8" yui="true"
-                 highlight="true" lowUpperBound="50" highLowerBound="80" />
-            <log type="testdox" target="./log/testdox.html" />
-        </logging>
-    </filter>
 </phpunit>
